@@ -5,7 +5,7 @@ class Settings:
         self.screen_width = 800
         self.screen_height = 600
         self.bg_color = (230, 230, 230)
-        self.want_fullscreen = True
+        self.want_fullscreen = False
         
         # Ship Settings
         self.ship_speed = 5
@@ -16,5 +16,11 @@ class Settings:
         self.bullet_height = 15
         self.bullet_color = (255, 201, 20) 
         self.bullets_allowed = 30
+
+        #Alien Settings
+        self.alien_speed = 1.0
+        self.alien_drop_speed = 10.0
+        # 1 is right, -1 is left
+        self.fleet_direction = 1.0
         
         
