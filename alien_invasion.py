@@ -16,11 +16,15 @@ class AlienInvasion:
 
         self.settings = Settings()
         self.clock = pygame.time.Clock()
-        # self.screen = pygame.display.set_mode(
-        #     (self.settings.screen_width, self.settings.screen_height))
-        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
-        self.settings.screen_width = self.screen.get_rect().width
-        self.settings.screen_height = self.screen.get_rect().height
+        if self.settings.want_fullscreen:
+            self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)    
+            self.settings.screen_width = self.screen.get_rect().width
+            self.settings.screen_height = self.screen.get_rect().height
+
+        else:
+            self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height))
+        
 
         pygame.display.set_caption("Alien Invasion")
 
@@ -93,18 +97,25 @@ class AlienInvasion:
         # Make an Alien
         ref_alien = Alien(self)
         alien_width = ref_alien.rect.width 
+        alien_height = ref_alien.rect.height
 
         current_x = alien_width
-        while current_x < (self.settings.screen_width - 2 * alien_width):
-            self._create_alien(current_x)
-            current_x += 2 * alien_width
+        current_y = alien_height
 
-    def _create_alien(self, x_pos):
+        while current_y < (self.settings.screen_height - 2 * alien_height):
+            while current_x < (self.settings.screen_width - 2 * alien_width):
+                self._create_alien(current_x, current_y)
+                current_x += 2 * alien_width
+            current_y += 2 * alien_height
+
+    def _create_alien(self, x_pos, y_pos):
         """Create an alien, place it in row"""
         new_alien = Alien(self)
-        new_alien = Alien(self)
         new_alien.x = x_pos
+        new_alien.y = y_pos
         new_alien.rect.x = x_pos
+        new_alien.rect.y = y_pos
+
         self.aliens.add(new_alien)
 
     def _update_screen(self):

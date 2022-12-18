@@ -5,6 +5,7 @@ class Settings:
         self.screen_width = 800
         self.screen_height = 600
         self.bg_color = (230, 230, 230)
+        self.want_fullscreen = True
         
         # Ship Settings
         self.ship_speed = 5
