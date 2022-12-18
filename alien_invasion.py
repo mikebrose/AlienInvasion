@@ -31,9 +31,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            # Group() will call update() for each sprite in group
-            # so self.bullets.update() ends up calling bullet.update()
-            self.bullets.update()
+            self._update_bullets
             self._update_screen()
         
             #Make most recently drawn screen visible
@@ -72,12 +70,22 @@ class AlienInvasion:
 
     def _fire_bullet(self):
         """Create new bullet and add to bullets group"""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+    def _update_bullets(self):
+        """Update the positions and remove old bullets"""
+        # Group() will call update() for each sprite in group
+        # so self.bullets.update() ends up calling each bullet.update()
+        self.bullets.update()
+        for bullet in self.bullets:
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
     def _update_screen(self):
+        """Draw a background color, ship and bullets"""
 
-        #Redraw background color, draw ship
         self.screen.fill(self.settings.bg_color)
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
