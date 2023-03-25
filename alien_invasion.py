@@ -83,19 +83,27 @@ class AlienInvasion:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
-
+    def _check_bullet_alien_collisions(self):
+    # Check for impacts, turn of the Trues to allow object persistence
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens,
+                                                False, True)  
+        
     def _update_bullets(self):
         """Update the positions and remove old bullets"""
         # Group() will call update() for each sprite in group
         # so self.bullets.update() ends up calling each bullet.update()
         self.bullets.update()
-        for bullet in self.bullets:
+        for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
-        # Check for impacts, turn of the Trues to allow object persistence
-        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens,
-            False, True)
+        self._check_bullet_alien_collisions()
+        
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_fleet()
+
+              
         
     def _update_aliens(self):
         """Update all the positions of the aliens"""
