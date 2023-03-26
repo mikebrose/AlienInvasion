@@ -41,6 +41,14 @@ class AlienInvasion:
         self.game_active = False
         self.play_button = Button(self, "Play")
 
+    def init_dynamic_settings(self):
+        """These settings will be changed as game progresses, 
+           but will need to be reset """
+        self.ship.speed = self.settings.ship_speed
+        self.bullet_speed = 2.5
+        self.alien_speed = 1.0
+        self.alien_drop_speed = 1.0 
+
     def run_game(self):
         """Start the main loop for the game"""
         while True:
@@ -79,7 +87,9 @@ class AlienInvasion:
 
             self._create_fleet()
             self.ship.center_ship()
+            self.init_dynamic_settings()
             pygame.mouse.set_visible(False)
+            print("Ship Speed: ", self.ship.speed)
 
             
     def _check_keydown_events(self, event):
@@ -122,12 +132,13 @@ class AlienInvasion:
 
         self._check_bullet_alien_collisions()
         
-        if not self.aliens:
+        if not self.aliens: 
             self.bullets.empty()
             self._create_fleet()
+            # Increase the speed whenever fleet is destroyed
+            self.increase_speed()
 
-              
-        
+
     def _update_aliens(self):
         """Update all the positions of the aliens"""
         self._check_fleet_edges()
@@ -155,6 +166,11 @@ class AlienInvasion:
             alien.rect.y += self.settings.alien_drop_speed
         self.settings.fleet_direction *= -1
 
+    def increase_speed(self):
+        self.settings.alien_speed *= self.settings.speedup_factor
+        self.settings.alien_drop_speed *= self.settings.speedup_factor
+        self.settings.bullet_speed *= self.settings.speedup_factor 
+        self.ship.speed *= self.settings.speedup_factor * .8
 
     def _create_fleet(self):
         """Create a fleet of Aliens"""
@@ -204,6 +220,7 @@ class AlienInvasion:
             #create new fleet and center the ship
             self._create_fleet()
             self.ship.center_ship()
+            print("Ship Speed: ", self.ship.speed)
 
             sleep(0.5)
         else:
