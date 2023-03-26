@@ -24,7 +24,7 @@ class Alien(Sprite):
 
     def update(self):
         """Update position according to speed and current direction"""
-        self.x += self.settings.fleet_direction * self.speed
+        self.x += self.settings.fleet_direction * self.settings.alien_speed
         self.rect.x = self.x
             
     def check_edges(self):

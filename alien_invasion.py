@@ -75,7 +75,7 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
-
+   
     def _check_play_button(self, mouse_pos):
         """Start new game if play clicks play"""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
@@ -170,7 +170,7 @@ class AlienInvasion:
         self.settings.alien_speed *= self.settings.speedup_factor
         self.settings.alien_drop_speed *= self.settings.speedup_factor
         self.settings.bullet_speed *= self.settings.speedup_factor 
-        self.settings.ship_speed *= self.settings.speedup_factor * .8
+        self.settings.ship_speed *= self.settings.speedup_factor * .9
 
     def _create_fleet(self):
         """Create a fleet of Aliens"""
@@ -220,6 +220,10 @@ class AlienInvasion:
             #create new fleet and center the ship
             self._create_fleet()
             self.ship.center_ship()
+            print("Ship Speed: ",self.settings.ship_speed)
+            print("Bullet Speed: ",self.settings.bullet_speed)
+            print("Alien Speed: ",self.settings.alien_speed)
+            print("Alien Drop Speed: ",self.settings.alien_drop_speed)
             sleep(0.5)
         else:
             self.game_active = False
