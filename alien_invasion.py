@@ -41,14 +41,6 @@ class AlienInvasion:
         self.game_active = False
         self.play_button = Button(self, "Play")
 
-    # def init_dynamic_settings(self):
-    #     """These settings will be changed as game progresses, 
-    #        but will need to be reset """
-    #     self.ship.speed = self.settings.ship_speed
-    #     self.bullet_speed = 2.5
-    #     self.alien_speed = 1.0
-    #     self.   alien_drop_speed = 1.0 
-
     def run_game(self):
         """Start the main loop for the game"""
         while True:
@@ -120,8 +112,11 @@ class AlienInvasion:
     # Check for impacts, turn on the Trues to allow object persistence
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens,
                                                 True, True)  
-        
-    def _update_bullets(self):
+        for collision in collisions:
+            self.stats.score += 1
+            print(self.stats.score)
+            
+    def _update_bullets(self):  
         """Update the positions and remove old bullets"""
         # Group() will call update() for each sprite in group
         # so self.bullets.update() ends up calling each bullet.update()
