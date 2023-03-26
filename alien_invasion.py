@@ -41,13 +41,13 @@ class AlienInvasion:
         self.game_active = False
         self.play_button = Button(self, "Play")
 
-    def init_dynamic_settings(self):
-        """These settings will be changed as game progresses, 
-           but will need to be reset """
-        self.ship.speed = self.settings.ship_speed
-        self.bullet_speed = 2.5
-        self.alien_speed = 1.0
-        self.alien_drop_speed = 1.0 
+    # def init_dynamic_settings(self):
+    #     """These settings will be changed as game progresses, 
+    #        but will need to be reset """
+    #     self.ship.speed = self.settings.ship_speed
+    #     self.bullet_speed = 2.5
+    #     self.alien_speed = 1.0
+    #     self.   alien_drop_speed = 1.0 
 
     def run_game(self):
         """Start the main loop for the game"""
@@ -87,9 +87,9 @@ class AlienInvasion:
 
             self._create_fleet()
             self.ship.center_ship()
-            self.init_dynamic_settings()
+            # This sets some of the speeds back to default
+            self.settings.reset_dynamic()
             pygame.mouse.set_visible(False)
-            print("Ship Speed: ", self.ship.speed)
 
             
     def _check_keydown_events(self, event):
@@ -170,7 +170,7 @@ class AlienInvasion:
         self.settings.alien_speed *= self.settings.speedup_factor
         self.settings.alien_drop_speed *= self.settings.speedup_factor
         self.settings.bullet_speed *= self.settings.speedup_factor 
-        self.ship.speed *= self.settings.speedup_factor * .8
+        self.settings.ship_speed *= self.settings.speedup_factor * .8
 
     def _create_fleet(self):
         """Create a fleet of Aliens"""
@@ -220,8 +220,6 @@ class AlienInvasion:
             #create new fleet and center the ship
             self._create_fleet()
             self.ship.center_ship()
-            print("Ship Speed: ", self.ship.speed)
-
             sleep(0.5)
         else:
             self.game_active = False

@@ -8,7 +8,6 @@ class Ship:
         self.screen_rect = ai_game.screen.get_rect()
         self.settings = ai_game.settings
 
-        self.speed = self.settings.ship_speed
         # Load the ship and get is rect
         self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
@@ -34,9 +33,9 @@ class Ship:
         # Note: Need to check if ship will leave screen IF move is applied
         # if self.rect.right + self.speed < self.screen_rect.right
         if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.x += self.speed
+            self.x += self.settings.ship_speed
         if self.moving_left and self.rect.left > 0:
-            self.x -= self.speed
+            self.x -= self.settings.ship_speed
         
         #Set ships rect pos from self.x
         self.rect.x = self.x

@@ -19,10 +19,12 @@ class Alien(Sprite):
 
         #Store the aliens exact horizontal position
         self.x = float(self.rect.x)
+        self.speed = self.settings.alien_speed
+        self.drop_speed = self.settings.alien_drop_speed
 
     def update(self):
         """Update position according to speed and current direction"""
-        self.x += self.settings.fleet_direction * self.settings.alien_speed
+        self.x += self.settings.fleet_direction * self.speed
         self.rect.x = self.x
             
     def check_edges(self):
